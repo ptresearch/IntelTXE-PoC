@@ -1,0 +1,107 @@
+diff -ur ./OpenIPC_orig/Config/BXTP/Default_TCI.xml ./OpenIPC/Config/BXTP/Default_TCI.xml
+--- ./OpenIPC_orig/Config/BXTP/Default_TCI.xml	2017-10-05 17:23:12.000000000 +0300
++++ ./OpenIPC/Config/BXTP/Default_TCI.xml	2018-08-07 22:25:42.000000000 +0300
+@@ -80,11 +80,20 @@
+               <Pins.Hook3 Signal="PWRBRK1"/>
+               <Pins.Hook4 Signal="PWRBRK2"/>
+               <Pins.Hook6 Signal="CpuWarm"/>
++              <Pins.DelayToReArmResetBreak Value="2000"/>
+               <Pins.PmcHandshakeSxSupported Value="false" />
+               <Pins.PmcHandshakeGlobalResetSupported Value="false"/>
+               <Pins.PmcHandshakeAcknowledgementDelay Value="0" />
+               <Pins.BreaksAreObservable Value="false"/>
+             </Interface.Pins>
++            <Interface.DCI_OOB_TRACE Enable="true">
++              <Trace.ForceStatus Value="true"/>
++              <Trace.ForceWriteback Value="false"/>
++              <Trace.PacketizedTraceSource Value="IntelTH"/>
++              <Trace.StatusEnable Value="true"/>
++              <Trace.TraceSelect Value="Stream"/>  <!-- balong - NPK 1.0 (found in SPT, CNP, and LBG) inverts the meaning of this bit, so set this to 'Packetize' if you want 'Stream' -->
++              <Trace.HandlerEnable Value="true"/>
++            </Interface.DCI_OOB_TRACE>
+             <Interface.DCI_RAW Enable="true" />
+             <Interface.DCI_PACKETS Enable="true">
+               <PacketInjection.SubscribeToStatus Value="true" />
+@@ -138,12 +147,32 @@
+     </Probe>
+     <RunControl>
+       <Vendors>
+-        <Plugin Name="TCI">
+-            <SupportedProcs>
+-                <Proc DeviceType="GLM" />
+-            </SupportedProcs>
++        <Plugin Name="OpenRC" DLL="OpenRc_*">
++          <SupportedProcs>
++            <Proc DeviceType="LMT"/>
++          </SupportedProcs>
+         </Plugin>
+       </Vendors>
++      <VendorSettings>
++        <OpenRC>
++          <AsmDasm>
++            <Proc DeviceType="LMT" DLL="OpenRcAsmDasmIA_*"/>
++          </AsmDasm>
++          <ExecutionControl>
++            <Proc DeviceType="LMT">
++              <ProbeMode>
++                <EntryMethod Value="CoreScan"/>
++                <DetectMethod Value="TapPolling"/>
++              </ProbeMode>
++              <StepMode Value="ReleaseAllThreads"/>
++              <PrdyTimeout Retries="0"/>
++              <InterestingThreads>
++                <Thread Name=".*"/>
++              </InterestingThreads>
++            </Proc>
++          </ExecutionControl>
++        </OpenRC>
++      </VendorSettings>
+     </RunControl>
+   </OpenIpcConfig>
+ </OpenIpcConfigs>
+Only in ./OpenIPC/Data/Xml/BXTP: Preconditions.xml.orig
+diff -ur ./OpenIPC_orig/Data/Xml/BXTP/ProductInfo.xml ./OpenIPC/Data/Xml/BXTP/ProductInfo.xml
+--- ./OpenIPC_orig/Data/Xml/BXTP/ProductInfo.xml	2018-08-10 18:24:44.000000000 +0300
++++ ./OpenIPC/Data/Xml/BXTP/ProductInfo.xml	2018-06-06 01:20:34.000000000 +0300
+@@ -4,21 +4,26 @@
+   </ProductIdentification>
+   <ProductDescription DeviceType="BXTP_CLTAPC" Stepping="*">
+     <TapInfo TapName="BXTP_CLTAPC" NodeType="Uncore" DeviceType="BXTP_CLTAPC" Stepping="$(Stepping)" AddInstanceNameSuffix="true"/>
++    <TapInfo TapName="CSE_TAP" NodeType="Box" DeviceType="LMT" Stepping="B3" InstanceId="0" AddInstanceNameSuffix="false" DeviceSubType="2">
++      <TapSelect Name="CSE_C0" DeviceType="LMT" NodeType="Core" SelectProc="" InstanceId="0" DeviceSubType="2">
++        <TapSelect Name="CSE_C0_T0" DeviceType="LMT" NodeType="Thread" InstanceId="0" DeviceSubType="2"/>
++      </TapSelect>
++    </TapInfo>
+     <TapInfo TapName="GLM_MODULE0" NodeType="Box" DeviceType="GLM_MODULE" Stepping="E0" InstanceId="0" AddInstanceNameSuffix="false">
+-      <TapSelect Name="GLM_C0" DeviceType="GLM" NodeType="Core" SelectProc="glm.tap.select_core(0)" InstanceId="0" DeviceSubType="">
++      <!--<TapSelect Name="GLM_C0" DeviceType="GLM" NodeType="Core" SelectProc="glm.tap.select_core(0)" InstanceId="0" DeviceSubType="">
+         <TapSelect Name="GLM_C0_T0" DeviceType="GLM" NodeType="Thread" InstanceId="0" DeviceSubType=""/>
+       </TapSelect>
+       <TapSelect Name="GLM_C1" DeviceType="GLM" NodeType="Core" SelectProc="glm.tap.select_core(1)" InstanceId="1" DeviceSubType="">
+         <TapSelect Name="GLM_C1_T0" DeviceType="GLM" NodeType="Thread" InstanceId="0" DeviceSubType=""/>
+-      </TapSelect>
++      </TapSelect>-->
+     </TapInfo>
+     <TapInfo TapName="GLM_MODULE1" NodeType="Box" DeviceType="GLM_MODULE" Stepping="E0" InstanceId="1" AddInstanceNameSuffix="false">
+-      <TapSelect Name="GLM_C2" DeviceType="GLM" NodeType="Core" SelectProc="glm.tap.select_core(0)" InstanceId="0" DeviceSubType="">
++      <!--<TapSelect Name="GLM_C2" DeviceType="GLM" NodeType="Core" SelectProc="glm.tap.select_core(0)" InstanceId="0" DeviceSubType="">
+         <TapSelect Name="GLM_C2_T0" DeviceType="GLM" NodeType="Thread" InstanceId="0" DeviceSubType=""/>
+       </TapSelect>
+       <TapSelect Name="GLM_C3" DeviceType="GLM" NodeType="Core" SelectProc="glm.tap.select_core(1)" InstanceId="1" DeviceSubType="">
+         <TapSelect Name="GLM_C3_T0" DeviceType="GLM" NodeType="Thread" InstanceId="0" DeviceSubType=""/>
+-      </TapSelect>
++      </TapSelect>-->
+     </TapInfo>
+     <TapInfo TapName="PUNIT_TAP" NodeType="Chipset" DeviceType="BXTP_PUNIT_TAP" Stepping="$(Stepping)" AddInstanceNameSuffix="true"/>
+     <TapInfo TapName="TAP2IOSF_TAP" NodeType="Chipset" DeviceType="TAP2IOSFSB" Stepping="A0" AddInstanceNameSuffix="true"/>
+diff -ur ./OpenIPC_orig/Data/Xml/BXTP/TapNetworks.B0.xml ./OpenIPC/Data/Xml/BXTP/TapNetworks.B0.xml
+--- ./OpenIPC_orig/Data/Xml/BXTP/TapNetworks.B0.xml	2018-08-10 18:24:44.000000000 +0300
++++ ./OpenIPC/Data/Xml/BXTP/TapNetworks.B0.xml	2018-06-04 20:18:32.000000000 +0300
+@@ -119,6 +119,7 @@
+       </Tap>
+       <Tap Name="RDU_SW_TAP" IrLen="8" Idcode="0x02100015" IdcodeIr="0x0C" VerifyProc="verify_idcode()" SerializeProc="common.soc.add_tap(0x11,6,18)" DeserializeProc="common.soc.remove_tap(0x11,0,18)" InsertBeforeParent="false">
+         <Tap Name="CDU_CSE_TAP" IrLen="8" Idcode="0x02100a11" IdcodeIr="0x0C" VerifyProc="verify_idcode()" SerializeProc="common.soc.add_tap(0x11,0,32)" DeserializeProc="common.soc.remove_tap(0x11,0,32)" InsertBeforeParent="false">
++          <Tap Name="CSE_TAP" IrLen="8" Idcode="0x100859" IdcodeIr="0x0C" VerifyProc="verify_idcode()" SerializeProc="common.soc.add_tap(0x11,0,6)" DeserializeProc="common.soc.remove_tap(0x11,0,6)" InsertBeforeParent="false"/>
+           <Tap Name="CDU_CSE_SCAN_TAP" IrLen="8" Idcode="0x001008d1" IdcodeIr="0x0C" VerifyProc="verify_idcode()" SerializeProc="common.soc.add_tap(0x11,2,6)" DeserializeProc="common.soc.remove_tap(0x11,0,6)" InsertBeforeParent="false"/>
+           <Tap Name="CDU_CSE_RETIME_TAP" IrLen="8" Idcode="0x0010085d" IdcodeIr="0x0C" VerifyProc="verify_idcode()" SerializeProc="common.soc.add_tap(0x11,4,6)" DeserializeProc="common.soc.remove_tap(0x11,0,6)" InsertBeforeParent="false"/>
+         </Tap>
