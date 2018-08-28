@@ -4,7 +4,7 @@
 
 # Content
 [Introduction](#introduction)  
-[Requred software](#requred-software)  
+[Requred Software](#requred-software)  
 [Generating the Payload](#generating-the-payload)  
 [Generating the Unlock Token](#generating-the-unlock-token)  
 [Peparing the SPI Flash Image](#peparing-the-spi-flash-image)  
@@ -13,15 +13,15 @@
 [Building the Firmware Image](#building-the-firmware-image)  
 [Writing the Image to SPI Flash](#writing-the-image-to-spi-flash)  
 [Preparing the USB Debug Cable](#preparing-the-usb-debug-cable)  
-[Patching OpenIPC Configuration files](#patching-openipc-configuration-files)  
+[Patching OpenIPC Configuration Files](#patching-openipc-configuration-files)  
 [Decrypting OpenIPC Configuration Files](#decrypting-openipc-configuration-files)  
-[Adding LMT core to the configuration](#adding-lmt-core-to-the-configuration)  
-[Setting the IPC_PATH environment variable](#setting-the-ipc_path-environment-variable)  
+[Adding LMT Core to the Configuration](#adding-lmt-core-to-the-configuration)  
+[Setting the IPC_PATH Environment Variable](#setting-the-ipc_path-environment-variable)  
 [Performing an Initial Check of JTAG Operability](#performing-an-initial-check-of-jtag-operability)  
-[Show CPU ME thread](#show-cpu-me-thread)  
-[Halting ME core](#halting-me-core)  
+[Show CPU ME Thread](#show-cpu-me-thread)  
+[Halting ME Core](#halting-me-core)  
 [ME Debugging: Quick Start](#me-debugging-quick-start)  
-[Reading arbitrary memory](#reading-arbitrary-memory)  
+[Reading Arbitrary Memory](#reading-arbitrary-memory)  
 [Reading ROM](#reading-rom)  
 [Why TXE?](#why-txe)  
 [Authors](#authors)  
@@ -33,7 +33,7 @@ Vulnerability [INTEL-SA-00086](https://www.intel.com/content/www/us/en/security-
 
 
 
-# Requred software 
+# Requred Software 
 
 ## Intel System Tools
 
@@ -45,7 +45,7 @@ Here is the structure of the root directory of the Intel System Tools package:
 The Intel ME (TXE, SPS) System Tools utilities are not intended for end users—so you cannot find them on the official Intel website. However, some OEMs publish them as part of software updates together with device drivers. So, for integrating our PoC you need *Intel TXE System Tools* version 3.x, which can be found online.
 
 ## Intel System Studio
-You need to install Intel System Studio, a trial version of which can be downloaded from Intel [site](https://software.intel.com/en-us/system-studio). In our experiments, we used *Intel System Studio 2018*
+You need to install Intel System Studio, a trial version of which can be downloaded from Intel [site](https://software.intel.com/en-us/system-studio). In our experiments, we used *Intel System Studio 2018*.
 
 ## Intel TXE Firmware 
 The PoC targets **Intel TXE firmware version 3.0.1.1107**. The SPI Flash image for [Gigabyte GB-BPCE-3350C version F5](http://download.gigabyte.eu/FileList/BIOS/brix_bios_gb-bpce-3350c_f5.zip) contains the necessary firmware version. 
@@ -76,9 +76,9 @@ To integrate *ct* and *utok.bin* files, run the *FIT* utility (*fit.exe*) and us
 
 ![screenshot](pic/fit.png)
 
-# Another Hardware Platform
+# Other Hardware Platform
 
-If you are using a another hardware platform and don't have access to *TXE 3.0.1.1107*, you can download an SPI Flash image for [Gigabyte GB-BPCE-3350C version F5](http://download.gigabyte.eu/FileList/BIOS/brix_bios_gb-bpce-3350c_f5.zip) and extract the TXE section through *FIT*. *FIT* extracts different sections of the overall SPI image (SPI descriptor, UEFI/BIOS firmware, Intel ME firmware, and Unlock Token) when the image is opened and saves them in the folder *"image_name"/Decomp *.
+If you are using an other hardware platform and don't have access to *TXE 3.0.1.1107*, you can download an SPI Flash image for [Gigabyte GB-BPCE-3350C version F5](http://download.gigabyte.eu/FileList/BIOS/brix_bios_gb-bpce-3350c_f5.zip) and extract the TXE section through *FIT*. *FIT* extracts different sections of the overall SPI image (SPI descriptor, UEFI/BIOS firmware, Intel ME firmware, and Unlock Token) when the image is opened and saves them in the folder *"image_name"/Decomp *.
 
 ![screenshot](pic/TXERegion.png)
 
@@ -122,7 +122,7 @@ You will need a *USB 3.0 debug cable* to connect to the platform. Either [buy](h
 
 ![screenshot](pic/usbdebug.png)
 
-# Patching OpenIPC Configuration files
+# Patching OpenIPC Configuration Files
 
 Intel develops and provides users with two software packages that can be used for JTAG debugging of platforms and the main CPU: DAL (DFx Abstraction Layer) and *OpenIPC*. Both *DAL* and *OpenIPC* are part of *Intel System Studio*. After installation of *Intel System Studio 2018*, *OpenIPC* appears in the following directory:
 
@@ -146,7 +146,7 @@ To decrypt the configuration files, extract the key from the *StructuredData* li
 config_decryptor.py –k 4504fb02be0a9c4c84df2a89cf508bc3 –p C:\Intel\OpenIPC
 ```
 
-## Adding LMT core to the configuration
+## Adding LMT Core to the Configuration
 
 The supplied version of OpenIPC does not have the necessary information about the TXE core. So we need to apply a patch (*patch.diff*) to the decrypted *OpenIPC* configuration files. Here's how to do it:
 
@@ -154,7 +154,7 @@ The supplied version of OpenIPC does not have the necessary information about th
 patch -p0 < patch.diff
 ```
 
-# Setting the IPC_PATH environment variable
+# Setting the IPC_PATH Environment Variable
 
 After decryption and patching, set the *IPC_PATH* environment variable to the new *OpenIPC* directory so that *ipccli* uses the modified *OpenIPC* version. For instance:
 
@@ -224,7 +224,7 @@ The *ipccli* utility comes with rather detailed HTML documentation, which can be
 <Python Dir>\Lib\site-packages\ipccli\html\Index.html
 ```
 
-## Show CPU ME thread
+## Show CPU ME Thread
 
 If the previous steps have been performed correctly, when a connection to the platform is made via *ipccli*, the *TXE* core is accessible via *CSE Tap* and *ipccli* allows accessing it by applying the following *ipccli* path:
 
@@ -238,7 +238,7 @@ But since the PoC blocks loading of the platform until the main CPU is initializ
 ipc.threads[0]
 ```
 
-## Halting ME core
+## Halting ME Core
 
 To halt ME processor instructions, run the following command:
 
@@ -250,7 +250,7 @@ ipc.threads[0].halt()
 
 The console displays the logical address of the instruction at which the halt was made (in our case, *0x1b7:0xa82d*, the *jmp $* instruction, for setting up an infinite loop)
 
-## Reading arbitrary memory
+## Reading Arbitrary Memory
 
 *OpenIPC* allows reading memory after the halt, for example:
 
@@ -258,7 +258,7 @@ The console displays the logical address of the instruction at which the halt wa
 ipc.threads[0].mem("0xf0080004P", 4)
 ```
 
-You can specify a logical address (*sel:offsset*), linear address (*L* modifier), or physical address (*P* modifier).
+You can specify a logical address (*sel:offset*), linear address (*L* modifier), or physical address (*P* modifier).
 
 ## Reading ROM
 
