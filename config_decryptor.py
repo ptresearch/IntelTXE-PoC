@@ -195,7 +195,7 @@ class IPCDecryptor:
         self.path = path
         if (not os.path.exists(os.path.join(path, "Data", "Index.bin")) or
                 not os.path.exists(os.path.join(path, "Config", "Index.bin"))):
-            print "Error: ", path, "isn't OpenIPC root directory\n"
+            print ("Error: {} isn't OpenIPC root directory\n".format(path))
             exit(-1)
         self.dec = Decryptor(key.decode("hex"))
     
