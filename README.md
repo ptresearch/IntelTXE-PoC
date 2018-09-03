@@ -4,7 +4,7 @@
 
 # Content
 [Introduction](#introduction)  
-[Requred Software](#requred-software)  
+[Required Software](#requred-software)  
 [Generating the Payload](#generating-the-payload)  
 [Generating the Unlock Token](#generating-the-unlock-token)  
 [Peparing the SPI Flash Image](#peparing-the-spi-flash-image)  
@@ -33,7 +33,7 @@ Vulnerability [INTEL-SA-00086](https://www.intel.com/content/www/us/en/security-
 
 
 
-# Requred Software 
+# Required Software 
 
 ## Intel System Tools
 
