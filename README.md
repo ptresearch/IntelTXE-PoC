@@ -4,7 +4,7 @@
 
 # Content
 [Introduction](#introduction)  
-[Required Software](#requred-software)  
+[Required Software](#required-software)  
 [Generating the Payload](#generating-the-payload)  
 [Generating the Unlock Token](#generating-the-unlock-token)  
 [Peparing the SPI Flash Image](#peparing-the-spi-flash-image)  
@@ -151,7 +151,7 @@ config_decryptor.py –k 4504fb02be0a9c4c84df2a89cf508bc3 –p C:\Intel\OpenIPC
 The supplied version of OpenIPC does not have the necessary information about the TXE core. So we need to apply a patch (*patch.diff*) to the decrypted *OpenIPC* configuration files. Here's how to do it:
 
 ```
-patch -p0 < patch.diff
+patch -p2 < patch.diff
 ```
 
 # Setting the IPC_PATH Environment Variable
