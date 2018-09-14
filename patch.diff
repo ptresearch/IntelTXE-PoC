@@ -1,6 +1,6 @@
-diff -ur ./OpenIPC_orig/Config/BXTP/Default_TCI.xml ./OpenIPC/Config/BXTP/Default_TCI.xml
---- ./OpenIPC_orig/Config/BXTP/Default_TCI.xml	2017-10-05 17:23:12.000000000 +0300
-+++ ./OpenIPC/Config/BXTP/Default_TCI.xml	2018-08-07 22:25:42.000000000 +0300
+diff -ruN ./a/OpenIPC_1.1740.2381.100/Config/BXTP/Default_TCI.xml ./b/OpenIPC_1.1740.2381.100/Config/BXTP/Default_TCI.xml
+--- ./a/OpenIPC_1.1740.2381.100/Config/BXTP/Default_TCI.xml	2017-10-05 17:23:12.000000000 +0300
++++ ./b/OpenIPC_1.1740.2381.100/Config/BXTP/Default_TCI.xml	2018-08-07 22:25:42.000000000 +0300
 @@ -80,11 +80,20 @@
                <Pins.Hook3 Signal="PWRBRK1"/>
                <Pins.Hook4 Signal="PWRBRK2"/>
@@ -59,10 +59,23 @@ diff -ur ./OpenIPC_orig/Config/BXTP/Default_TCI.xml ./OpenIPC/Config/BXTP/Defaul
      </RunControl>
    </OpenIpcConfig>
  </OpenIpcConfigs>
-Only in ./OpenIPC/Data/Xml/BXTP: Preconditions.xml.orig
-diff -ur ./OpenIPC_orig/Data/Xml/BXTP/ProductInfo.xml ./OpenIPC/Data/Xml/BXTP/ProductInfo.xml
---- ./OpenIPC_orig/Data/Xml/BXTP/ProductInfo.xml	2018-08-10 18:24:44.000000000 +0300
-+++ ./OpenIPC/Data/Xml/BXTP/ProductInfo.xml	2018-06-06 01:20:34.000000000 +0300
+diff -ruN ./a/OpenIPC_1.1740.2381.100/Config/OpenIpcConfig.xml ./b/OpenIPC_1.1740.2381.100/Config/OpenIpcConfig.xml
+--- ./a/OpenIPC_1.1740.2381.100/Config/OpenIpcConfig.xml	2017-10-05 17:23:12.000000000 +0300
++++ ./b/OpenIPC_1.1740.2381.100/Config/OpenIpcConfig.xml	2018-07-09 18:57:48.000000000 +0300
+@@ -1,7 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<DefaultConfigs xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation="Schemas/OpenIpcConfig.Default.xsd">
+-
+-  <!-- A configuration name must be specified here -->
+-  <DefaultIpcConfig Name="" />
+-
++<DefaultConfigs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Schemas/OpenIpcConfig.Default.xsd">
++	<!-- A configuration name must be specified here -->
++	<DefaultIpcConfig Name="BXTP_Default_TCI"/>
+ </DefaultConfigs>
+diff -ruN ./a/OpenIPC_1.1740.2381.100/Data/Xml/BXTP/ProductInfo.xml ./b/OpenIPC_1.1740.2381.100/Data/Xml/BXTP/ProductInfo.xml
+--- ./a/OpenIPC_1.1740.2381.100/Data/Xml/BXTP/ProductInfo.xml	2018-09-13 11:37:20.000000000 +0300
++++ ./b/OpenIPC_1.1740.2381.100/Data/Xml/BXTP/ProductInfo.xml	2018-06-06 01:20:34.000000000 +0300
 @@ -4,21 +4,26 @@
    </ProductIdentification>
    <ProductDescription DeviceType="BXTP_CLTAPC" Stepping="*">
@@ -94,9 +107,9 @@ diff -ur ./OpenIPC_orig/Data/Xml/BXTP/ProductInfo.xml ./OpenIPC/Data/Xml/BXTP/Pr
      </TapInfo>
      <TapInfo TapName="PUNIT_TAP" NodeType="Chipset" DeviceType="BXTP_PUNIT_TAP" Stepping="$(Stepping)" AddInstanceNameSuffix="true"/>
      <TapInfo TapName="TAP2IOSF_TAP" NodeType="Chipset" DeviceType="TAP2IOSFSB" Stepping="A0" AddInstanceNameSuffix="true"/>
-diff -ur ./OpenIPC_orig/Data/Xml/BXTP/TapNetworks.B0.xml ./OpenIPC/Data/Xml/BXTP/TapNetworks.B0.xml
---- ./OpenIPC_orig/Data/Xml/BXTP/TapNetworks.B0.xml	2018-08-10 18:24:44.000000000 +0300
-+++ ./OpenIPC/Data/Xml/BXTP/TapNetworks.B0.xml	2018-06-04 20:18:32.000000000 +0300
+diff -ruN ./a/OpenIPC_1.1740.2381.100/Data/Xml/BXTP/TapNetworks.B0.xml ./b/OpenIPC_1.1740.2381.100/Data/Xml/BXTP/TapNetworks.B0.xml
+--- ./a/OpenIPC_1.1740.2381.100/Data/Xml/BXTP/TapNetworks.B0.xml	2018-09-13 11:37:20.000000000 +0300
++++ ./b/OpenIPC_1.1740.2381.100/Data/Xml/BXTP/TapNetworks.B0.xml	2018-06-04 20:18:32.000000000 +0300
 @@ -119,6 +119,7 @@
        </Tap>
        <Tap Name="RDU_SW_TAP" IrLen="8" Idcode="0x02100015" IdcodeIr="0x0C" VerifyProc="verify_idcode()" SerializeProc="common.soc.add_tap(0x11,6,18)" DeserializeProc="common.soc.remove_tap(0x11,0,18)" InsertBeforeParent="false">
