@@ -24,6 +24,7 @@
 [Reading Arbitrary Memory](#reading-arbitrary-memory)  
 [Reading ROM](#reading-rom)  
 [Why TXE?](#why-txe)  
+[Tested Platforms List](#tested-platforms-list)  
 [Authors](#authors)  
 [License](#license)
 
@@ -293,6 +294,10 @@ The platform gives more opportunities for debugging without a special [Intel CCA
 [Inside Intel Management Engine][8]
 
 
+## Tested Platforms List
+
+* Gigabyte Mini-PC Barebone (BRIX) GB-BPCE-3350C (rev:1.1, 1.2)
+* Beelink M1
 
 
 # Authors 
