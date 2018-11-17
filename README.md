@@ -7,7 +7,7 @@
 [Required Software](#required-software)  
 [Generating the Payload](#generating-the-payload)  
 [Generating the Unlock Token](#generating-the-unlock-token)  
-[Peparing the SPI Flash Image](#peparing-the-spi-flash-image)  
+[Preparing the SPI Flash Image](#preparing-the-spi-flash-image)  
 [Integrating Files Into the Firmware Image](#integrating-files-into-the-firmware-image)  
 [Disabling OEM Signing](#disabling-oem-signing)  
 [Building the Firmware Image](#building-the-firmware-image)  
@@ -72,7 +72,7 @@ me_utok_bxtp.py -f <file_name>
 ```
 The script generates the necessary data and exports it to the specified file (indicate either the full file path or, within the current directory, simply a name, *utok.bin* by default). This file will be used later by *FIT*.
 
-# Peparing the SPI Flash Image
+# Preparing the SPI Flash Image
 To integrate *ct* and *utok.bin* files, run the *FIT* utility (*fit.exe*) and use it to open the SPI firmware image provided with your platform. For the *Gigabyte Brix GP-BPCE-3350C*, open the file downloaded from the Gigabyte link indicated above (path to image file in the archive: *F5/image.bin*).  
 
 ![screenshot](pic/fit.png)
