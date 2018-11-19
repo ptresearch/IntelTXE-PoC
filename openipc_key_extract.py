@@ -4,6 +4,7 @@
 #
 # Details:  https://github.com/ptresearch/IntelME-JTAG
 #           https://github.com/ptresearch/IntelTXE-POC
+from __future__ import print_function
 idaapi.get_strlist_options()
 idaapi.build_strlist()
 str_count = idaapi.get_strlist_qty()
@@ -33,4 +34,4 @@ if key_ea == idaapi.BADADDR:
     raise Exception("Can't find OpenIPC config data key")
 
 key = idaapi.get_many_bytes(key_ea, 0x10)
-print '"' + key.encode("hex") + '"'
+print('"' + key.encode("hex") + '"')

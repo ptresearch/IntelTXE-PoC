@@ -6,6 +6,7 @@
 #           http://blog.ptsecurity.com/2018/01/running-unsigned-code-in-intel-me.html
 #           https://github.com/ptresearch/IntelME-JTAG
 
+from __future__ import print_function
 import argparse
 import struct
 
@@ -82,7 +83,7 @@ def ParseArguments():
     return parser.parse_args().f
 
 def main():
-    print descr
+    print(descr)
     file_name = ParseArguments()
     data = GenerateShellCode()
     print ("[*] Saving to %s..." % (file_name))
