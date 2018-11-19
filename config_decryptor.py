@@ -15,6 +15,11 @@ from argparse import ArgumentParser as argpars
 from Crypto.Cipher import AES
 from Crypto.Hash import SHA as sha1
 
+try:
+    xrange          # Python 2
+except NameError:
+    xrange = range  # Python 3
+
 
 def create_backup(paths):
     archiveName = strftime("OpenIPC_backup_%Y%m%d_%H%M%S.zip", gmtime())
