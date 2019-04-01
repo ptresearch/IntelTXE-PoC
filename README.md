@@ -23,7 +23,7 @@
 [ME Debugging: Quick Start](#me-debugging-quick-start)  
 [Reading Arbitrary Memory](#reading-arbitrary-memory)  
 [Reading ROM](#reading-rom)  
-[BringUP Main CPU](#bringup-main-cpu)
+[BringUP Main CPU](#bringup-main-cpu)  
 [Why TXE?](#why-txe)  
 [Tested Platforms List](#tested-platforms-list)  
 [Authors](#authors)  
@@ -280,6 +280,7 @@ It is important to specify the size as *0x20001*, as opposed to *0x20000* (other
 ## BringUP Main CPU
 
 You have to activate HAP mode for bringing up the CPU. 0-bit of the byte at the offset +0x102 should be set:
+
 ![screenshot](pic/hap.png)
 
 
