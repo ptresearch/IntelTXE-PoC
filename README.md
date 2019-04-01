@@ -23,6 +23,7 @@
 [ME Debugging: Quick Start](#me-debugging-quick-start)  
 [Reading Arbitrary Memory](#reading-arbitrary-memory)  
 [Reading ROM](#reading-rom)  
+[BringUP Main CPU](#bringup-main-cpu)  
 [Why TXE?](#why-txe)  
 [Tested Platforms List](#tested-platforms-list)  
 [Authors](#authors)  
@@ -276,6 +277,13 @@ ipc.threads[0].memsave("<file path>", "0xfffe0000p", 0x20001)
 
 It is important to specify the size as *0x20001*, as opposed to *0x20000* (otherwise *OpenIPC* runs into issues due to problems with 64-bit access, which is not possible for the 32-bit ME core). The last byte of the file can be thrown out, since it is not part of the *ROM*.
 
+## BringUP Main CPU
+
+You have to activate HAP mode for bringing up the CPU. 0-bit of the byte at the offset +0x102 should be set:
+
+![screenshot](pic/hap.png)
+
+
 # Why TXE? 
 
 The platform gives more opportunities for debugging without a special [Intel CCA-SVT](https://designintools.intel.com/Silicon_View_Technology_Closed_Chassis_Adapter_p/itpxdpsvt.htm) adapter and allows debugging the earliest stages of the TXE core via an ordinary *USB debug cable*.
@@ -293,6 +301,7 @@ The platform gives more opportunities for debugging without a special [Intel CCA
 
 [Inside Intel Management Engine][8]
 
+[Disabling Intel ME 11 via undocumented mode][9]
 
 ## Tested Platforms List
 
@@ -332,3 +341,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [6]: https://www.blackhat.com/docs/eu-17/materials/eu-17-Sklyarov-Intel-ME-Flash-File-System-Explained-wp.pdf
 [7]: https://www.blackhat.com/docs/eu-17/materials/eu-17-Goryachy-How-To-Hack-A-Turned-Off-Computer-Or-Running-Unsigned-Code-In-Intel-Management-Engine-wp.pdf
 [8]: https://github.com/ptresearch/IntelME-JTAG
+[9]: http://blog.ptsecurity.com/2017/08/disabling-intel-me.html
