@@ -301,6 +301,7 @@ The platform gives more opportunities for debugging without a special [Intel CCA
 
 [Inside Intel Management Engine][8]
 
+[Disabling Intel ME 11 via undocumented mode][9]
 
 ## Tested Platforms List
 
@@ -340,3 +341,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [6]: https://www.blackhat.com/docs/eu-17/materials/eu-17-Sklyarov-Intel-ME-Flash-File-System-Explained-wp.pdf
 [7]: https://www.blackhat.com/docs/eu-17/materials/eu-17-Goryachy-How-To-Hack-A-Turned-Off-Computer-Or-Running-Unsigned-Code-In-Intel-Management-Engine-wp.pdf
 [8]: https://github.com/ptresearch/IntelME-JTAG
+[9]: http://blog.ptsecurity.com/2017/08/disabling-intel-me.html
