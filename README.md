@@ -11,7 +11,7 @@
 [Integrating Files Into the Firmware Image](#integrating-files-into-the-firmware-image)  
 [Disabling OEM Signing](#disabling-oem-signing)  
 [Building the Firmware Image](#building-the-firmware-image)  
-[BringUP Main CPU](#bringup-main-cpu)
+[BringUP Main CPU](#bringup-main-cpu) 
 [Writing the Image to SPI Flash](#writing-the-image-to-spi-flash)  
 [Preparing the USB Debug Cable](#preparing-the-usb-debug-cable)  
 [Patching OpenIPC Configuration Files](#patching-openipc-configuration-files)  
@@ -20,7 +20,7 @@
 [Setting the IPC_PATH Environment Variable](#setting-the-ipc_path-environment-variable)  
 [Performing an Initial Check of JTAG Operability](#performing-an-initial-check-of-jtag-operability)  
 [Show CPU ME Thread](#show-cpu-me-thread)  
-[Halting Cores](#halting-cores)
+[Halting Cores](#halting-cores) 
 [ME Debugging: Quick Start](#me-debugging-quick-start)  
 [Reading Arbitrary Memory](#reading-arbitrary-memory)  
 [Reading ROM](#reading-rom)  
@@ -59,7 +59,9 @@ Also the scripts require [pycrypto](https://pypi.org/project/pycrypto/) packet. 
 pip install pycrypto
 ```
 
-## AMI BIOS Configuration Program
+## AMIBCP
+
+**This utility is only necessary if you need to bring up CPU.**
 
 EFI Human Interface Infrastructure (HII) is a special mechanism for creating a user interface in the UEFI, as well as processing and managing user input. EFI HII identifies default values for all options, including the hidden ones. As soon as the option related to DCI is found, it can be activated for the default configuration, and DCI can be enabled by restoring the BIOS factory settings. For bringing up the main CPU you need *AMI BIOS Configuration Program* version 5.xx, which can be also found online. 
 
@@ -82,13 +84,13 @@ The script generates the necessary data and exports it to the specified file (in
 
 ## Activating BIOS *DCI enable* option
 
-Skip this step if you don't need to bring up the CPU.
+**Skip this step if you don't need to bring up the CPU.**
 
 To activate *DCI Enable* option, run the AMIBCP utility and use it to open the SPI firmware image provided with your platform. For the Gigabyte Brix GP-BPCE-3350C, open the file downloaded from the Gigabyte link indicated above (path to image file in the archive: F5/image.bin).
 
 ![screenshot](pic/amibcp.png)
 
-Now we need to enable in tab *Setup Configuration* DCI enable option.
+Now we need to enable *HDCIEN* option in tab *Setup Configuration*.
 
 
 ## Integrate payload
@@ -132,7 +134,9 @@ If everything has been done correctly up to this point, the build process should
 
 ![screenshot](pic/buildsucc.png)
 
-# BringUP Main CPU (HAP-mode)
+# BringUP Main CPU
+
+**Skip this step if you don't need to bring up the CPU.**
 
 You have to activate HAP mode for bringing up the CPU. 0-bit of the byte at the offset +0x102 should be set:
 
