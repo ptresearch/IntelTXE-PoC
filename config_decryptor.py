@@ -38,7 +38,7 @@ def decrypt_path(name):
             decChar = ord('?')
         elif c == '-':
             decChar = ord('>')
-        elif c == '\\' or c == '.':
+        elif c == '\\' or c == '/' or c == '.':
             decryptName += c
             counter = 0
             continue
