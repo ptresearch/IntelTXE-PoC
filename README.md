@@ -11,6 +11,7 @@
 [Integrating Files Into the Firmware Image](#integrating-files-into-the-firmware-image)  
 [Disabling OEM Signing](#disabling-oem-signing)  
 [Building the Firmware Image](#building-the-firmware-image)  
+[BringUP Main CPU](#bringup-main-cpu)
 [Writing the Image to SPI Flash](#writing-the-image-to-spi-flash)  
 [Preparing the USB Debug Cable](#preparing-the-usb-debug-cable)  
 [Patching OpenIPC Configuration Files](#patching-openipc-configuration-files)  
@@ -19,11 +20,10 @@
 [Setting the IPC_PATH Environment Variable](#setting-the-ipc_path-environment-variable)  
 [Performing an Initial Check of JTAG Operability](#performing-an-initial-check-of-jtag-operability)  
 [Show CPU ME Thread](#show-cpu-me-thread)  
-[Halting ME Core](#halting-me-core)  
+[Halting Cores](#halting-cores)
 [ME Debugging: Quick Start](#me-debugging-quick-start)  
 [Reading Arbitrary Memory](#reading-arbitrary-memory)  
 [Reading ROM](#reading-rom)  
-[BringUP Main CPU](#bringup-main-cpu)  
 [Why TXE?](#why-txe)  
 [Tested Platforms List](#tested-platforms-list)  
 [Authors](#authors)  
@@ -59,12 +59,17 @@ Also the scripts require [pycrypto](https://pypi.org/project/pycrypto/) packet. 
 pip install pycrypto
 ```
 
+## AMI BIOS Configuration Program
+
+EFI Human Interface Infrastructure (HII) is a special mechanism for creating a user interface in the UEFI, as well as processing and managing user input. EFI HII identifies default values for all options, including the hidden ones. As soon as the option related to DCI is found, it can be activated for the default configuration, and DCI can be enabled by restoring the BIOS factory settings. For bringing up the main CPU you need *AMI BIOS Configuration Program* version 5.xx, which can be also found online. 
+
+
 # Generating the Payload
 Run the script **me_exp_bxtp.py**:
 ```
 me_exp_bxtp.py -f <file_name>
 ```
-The script generates the necessary data and exports it to the specified file (indicate either the full file path or, within the current directory, simply a name, *ct* by default). This file will be used later by *FIT*.
+The script generates the necessary data and exports it to the specified file (indicate either the full file path or, within the current directory, simply a name, *ct.bin* by default). This file will be used later by *FIT*.
 
 # Generating the Unlock Token
 Run the script **me_utok_bxtp.py**:
@@ -74,7 +79,21 @@ me_utok_bxtp.py -f <file_name>
 The script generates the necessary data and exports it to the specified file (indicate either the full file path or, within the current directory, simply a name, *utok.bin* by default). This file will be used later by *FIT*.
 
 # Preparing the SPI Flash Image
-To integrate *ct* and *utok.bin* files, run the *FIT* utility (*fit.exe*) and use it to open the SPI firmware image provided with your platform. For the *Gigabyte Brix GP-BPCE-3350C*, open the file downloaded from the Gigabyte link indicated above (path to image file in the archive: *F5/image.bin*).  
+
+## Activating BIOS *DCI enable* option
+
+Skip this step if you don't need to bring up the CPU.
+
+To activate *DCI Enable* option, run the AMIBCP utility and use it to open the SPI firmware image provided with your platform. For the Gigabyte Brix GP-BPCE-3350C, open the file downloaded from the Gigabyte link indicated above (path to image file in the archive: F5/image.bin).
+
+![screenshot](pic/amibcp.png)
+
+Now we need to enable in tab *Setup Configuration* DCI enable option.
+
+
+## Integrate payload
+
+To integrate *ct.bin* and *utok.bin* files, run the *FIT* utility (*fit.exe*) and use it to open the SPI firmware image.
 
 ![screenshot](pic/fit.png)
 
@@ -112,6 +131,13 @@ Ignore the message about BootGuard settings (click "Yes"):
 If everything has been done correctly up to this point, the build process should be successful and *FIT* outputs something like the following console message:
 
 ![screenshot](pic/buildsucc.png)
+
+# BringUP Main CPU (HAP-mode)
+
+You have to activate HAP mode for bringing up the CPU. 0-bit of the byte at the offset +0x102 should be set:
+
+![screenshot](pic/hap.png)
+
 
 # Writing the Image to SPI Flash[](#writeimage)
 
@@ -240,17 +266,26 @@ But since the PoC blocks loading of the platform until the main CPU is initializ
 ipc.threads[0]
 ```
 
-## Halting ME Core
+## Halting Cores
 
 To halt ME processor instructions, run the following command:
 
 ```
-ipc.threads[0].halt()
+me = ipc.devs.cse_c0.threads[0]
+me.halt()
 ```
 
-![screenshot](pic/halt.png)
+To halt CPU processor instructions, run the following command:
 
-The console displays the logical address of the instruction at which the halt was made (in our case, *0x1b7:0xa82d*, the *jmp $* instruction, for setting up an infinite loop)
+```
+core = ipc.threads[0]
+core.halt()
+```
+
+
+![screenshot](pic/cpu_me_halt.png)
+
+The console displays the logical address of the instruction at which the halt was made.
 
 ## Reading Arbitrary Memory
 
@@ -276,12 +311,6 @@ ipc.threads[0].memsave("<file path>", "0xfffe0000p", 0x20001)
 ```
 
 It is important to specify the size as *0x20001*, as opposed to *0x20000* (otherwise *OpenIPC* runs into issues due to problems with 64-bit access, which is not possible for the 32-bit ME core). The last byte of the file can be thrown out, since it is not part of the *ROM*.
-
-## BringUP Main CPU
-
-You have to activate HAP mode for bringing up the CPU. 0-bit of the byte at the offset +0x102 should be set:
-
-![screenshot](pic/hap.png)
 
 
 # Why TXE? 
