@@ -11,7 +11,7 @@
 [Integrating Files Into the Firmware Image](#integrating-files-into-the-firmware-image)  
 [Disabling OEM Signing](#disabling-oem-signing)  
 [Building the Firmware Image](#building-the-firmware-image)  
-[BringUP Main CPU](#bringup-main-cpu) 
+[BringUP Main CPU](#bringup-main-cpu)  
 [Writing the Image to SPI Flash](#writing-the-image-to-spi-flash)  
 [Preparing the USB Debug Cable](#preparing-the-usb-debug-cable)  
 [Patching OpenIPC Configuration Files](#patching-openipc-configuration-files)  
@@ -20,7 +20,7 @@
 [Setting the IPC_PATH Environment Variable](#setting-the-ipc_path-environment-variable)  
 [Performing an Initial Check of JTAG Operability](#performing-an-initial-check-of-jtag-operability)  
 [Show CPU ME Thread](#show-cpu-me-thread)  
-[Halting Cores](#halting-cores) 
+[Halting Cores](#halting-cores)  
 [ME Debugging: Quick Start](#me-debugging-quick-start)  
 [Reading Arbitrary Memory](#reading-arbitrary-memory)  
 [Reading ROM](#reading-rom)  
@@ -82,15 +82,15 @@ The script generates the necessary data and exports it to the specified file (in
 
 # Preparing the SPI Flash Image
 
-## Activating BIOS *DCI enable* option
+## Activating DCI option
 
 **Skip this step if you don't need to bring up the CPU.**
 
-To activate *DCI Enable* option, run the AMIBCP utility and use it to open the SPI firmware image provided with your platform. For the Gigabyte Brix GP-BPCE-3350C, open the file downloaded from the Gigabyte link indicated above (path to image file in the archive: F5/image.bin).
+To activate the *DCI Enable* option, run the AMIBCP utility and use it to open the SPI firmware image provided with your platform. For the Gigabyte Brix GP-BPCE-3350C, open the file downloaded from the Gigabyte link indicated above (path to image file in the archive: F5/image.bin).
 
 ![screenshot](pic/amibcp.png)
 
-Now we need to enable *HDCIEN* option in tab *Setup Configuration*.
+Now we need to enable the *HDCIEN* option in the *Setup Configuration* tab.
 
 
 ## Integrate payload
