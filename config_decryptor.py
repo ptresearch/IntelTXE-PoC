@@ -238,10 +238,11 @@ class IPCDecryptor:
                             copy_dir(os.path.join(fullPath, item),
                                      os.path.join(fullPath, decryptName))
                             shutil.rmtree(os.path.join(fullPath, item))
+                            self.__decrypt_directory(fullPath, decryptName)
                     else:
                         os.rename(os.path.join(fullPath, item),
                                   os.path.join(fullPath, decryptName))
-                    self.__decrypt_directory(fullPath, decryptName)
+                        self.__decrypt_directory(fullPath, decryptName)
 
             else:
                 decryptName = decrypt_path(item)
