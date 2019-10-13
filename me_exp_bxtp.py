@@ -96,7 +96,7 @@ def GenerateShellCode():
 
 def ParseArguments():
     parser = argparse.ArgumentParser(description=descr)
-    parser.add_argument('-f', metavar='<file name>', help='file name', type=str, default="ct")
+    parser.add_argument('-f', metavar='<file name>', help='file name', type=str, default="ct.bin")
     return parser.parse_args().f
 
 def main():
