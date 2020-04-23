@@ -50,7 +50,7 @@ The Intel ME (TXE, SPS) System Tools utilities are not intended for end users—
 You need to install Intel System Studio, a trial version of which can be downloaded from Intel [site](https://software.intel.com/en-us/system-studio). In our experiments, we used *Intel System Studio 2018*.
 
 ## Intel TXE Firmware 
-The PoC targets **Intel TXE firmware version 3.0.1.1107**. The SPI Flash image for [Gigabyte GB-BPCE-3350C version F5](http://download.gigabyte.eu/FileList/BIOS/brix_bios_gb-bpce-3350c_f5.zip) contains the necessary firmware version. 
+The PoC targets **Intel TXE firmware version 3.0.1.1107**. The SPI Flash image for [Gigabyte GB-BPCE-3350C version F5](http://download.gigabyte.com/FileList/BIOS/brix_bios_gb-bpce-3350c_f5.zip) contains the necessary firmware version.
 
 ## Python 
 All our scripts are written on Python. We recommend using [Python 2.7](https://www.python.org/download/releases/2.7/)
